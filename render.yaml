@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: personal-blog-assistant-api
+    runtime: python
+    rootDir: backend
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT --workers 1
+    healthCheckPath: /health
+    envVars:
+      - key: AI_PROVIDER
+        value: gemini
+      - key: PYTHON_VERSION
+        value: 3.12.8
+      - key: APP_ENV
+        value: production
+      - key: STORAGE_BACKEND
+        value: firestore
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: FIREBASE_SERVICE_ACCOUNT_JSON
+        sync: false
+      - key: APP_ACCESS_TOKEN
+        generateValue: true
+      - key: ALLOWED_ORIGINS
+        sync: false
+      - key: GEMINI_MODEL
+        value: gemini-3.5-flash-lite
