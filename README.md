@@ -55,6 +55,8 @@ Copy-Item .env.example .env
 
 `.env`, 서비스 계정 키, SQLite DB는 Git에서 제외합니다. 프론트 앱은 브라우저 탭의 `sessionStorage`에 접근키를 보관합니다. Firebase 클라이언트 직접 접근은 필요하지 않으므로 Firestore 규칙은 거부로 둘 수 있습니다.
 
+배포 앱의 실제 데이터·채팅은 개인 서비스 접근키 입력 후 사용할 수 있습니다. 평가자에게는 접근키를 별도 비공개 경로로 전달해야 하며 공개 저장소에는 올리지 않습니다.
+
 ## 데이터와 API
 
 `data/{id}`에는 `date`, `value`, `memo`, `metric`, `unit`, `updated_at`을 저장합니다. `conversations/{id}`에는 제목, 전체 `messages`, 갱신 시각을 저장합니다. Pydantic이 날짜, 음수, 지표 종류, 메시지 길이 등을 검사합니다.
@@ -87,3 +89,11 @@ Copy-Item .env.example .env
 | API 문서 | [Render Swagger UI](submission-screenshots/04-swagger.png) |
 
 캡처 시점과 내용은 [화면 캡처 설명](submission-screenshots/README.md)을 참고하세요.
+
+![데이터 요약과 채팅 질문](submission-screenshots/01-chat-and-summary.png)
+
+![통계가 반영된 AI 답변](submission-screenshots/01b-chat-answer.png)
+
+![데이터 수정 결과](submission-screenshots/02-data-edit.png)
+
+![이전 대화 불러오기 목록](submission-screenshots/03-conversation-list.png)
