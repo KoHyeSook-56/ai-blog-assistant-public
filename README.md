@@ -23,7 +23,7 @@ FastAPI, Pydantic, firebase-admin/Firestore, OpenAI Python SDK(Gemini 공식 호
 | 백엔드 API | [Render API](https://personal-blog-assistant-api.onrender.com/) |
 | Swagger UI | [API 문서](https://personal-blog-assistant-api.onrender.com/docs) |
 
-무료 Render 인스턴스의 첫 요청은 늦을 수 있어 프론트에 연결 안내와 요청 시간 제한을 넣었습니다.
+무료 Render 인스턴스가 잠들어 있으면 첫 접속이 지연됩니다. 첫 상태 확인과 초기 데이터 요청은 최대 90초 기다리고, 일시적인 502·503·504·네트워크 오류에는 한 번 자동 재시도합니다. 그래도 실패하면 화면의 **연결 다시 시도**를 누르면 됩니다. 초기 목록과 요약은 `/api/bootstrap` 한 번으로 받아 Firestore 중복 조회를 줄였습니다. 무료 서버의 잠자기 자체를 없애는 기능은 아닙니다.
 
 ## 로컬 실행
 
@@ -60,7 +60,7 @@ Copy-Item .env.example .env
 `data/{id}`에는 `date`, `value`, `memo`, `metric`, `unit`, `updated_at`을 저장합니다. `conversations/{id}`에는 제목, 전체 `messages`, 갱신 시각을 저장합니다. Pydantic이 날짜, 음수, 지표 종류, 메시지 길이 등을 검사합니다.
 
 - `POST /api/data`, `GET /api/data`, `PUT /api/data/{id}`, `DELETE /api/data/{id}`
-- `GET /api/data/summary`, `POST /api/data-import`
+- `GET /api/data/summary`, `GET /api/bootstrap`, `POST /api/data-import`
 - `POST /api/conversations`, `GET /api/conversations`, `GET /api/conversations/{id}`, `DELETE /api/conversations/{id}`
 - `POST /api/chat`, `GET /health`, `GET /docs`
 
@@ -77,4 +77,13 @@ Copy-Item .env.example .env
 
 ## 검증 및 제출 화면
 
-`cd backend; .\.venv\Scripts\python.exe -m pytest tests -q`로 분석·API 테스트 11개를 실행합니다. 실제 서비스 화면에서 데이터 요약과 질문·답변, 데이터 수정 후 목록, 이전 대화 불러오기, 배포된 Swagger UI를 캡처해 첨부합니다.
+`cd backend; .\.venv\Scripts\python.exe -m pytest tests -q`로 분석·API 테스트 12개를 실행합니다. 아래 화면은 서비스 기능을 확인할 수 있도록 캡처한 예시입니다. 배포가 잠들어 있다면 먼저 Render Swagger를 열고, Vercel 화면에서 잠시 기다리거나 연결을 다시 시도해 주세요.
+
+| 제출 화면 | 캡처 |
+|---|---|
+| 데이터 요약과 채팅 | [요약과 질문](submission-screenshots/01-chat-and-summary.png) · [Gemini 답변](submission-screenshots/01b-chat-answer.png) |
+| 데이터 관리 | [수정한 데이터 목록](submission-screenshots/02-data-edit.png) |
+| 대화 기록 | [저장된 대화와 불러오기](submission-screenshots/03-conversation-list.png) |
+| API 문서 | [Render Swagger UI](submission-screenshots/04-swagger.png) |
+
+캡처 시점과 내용은 [화면 캡처 설명](submission-screenshots/README.md)을 참고하세요.
