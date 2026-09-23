@@ -1,6 +1,7 @@
 """Firestore for production; explicit SQLite preview for local development only."""
 import json
 import hashlib
+import logging
 import sqlite3
 from functools import lru_cache
 from fastapi import HTTPException
@@ -52,6 +53,7 @@ class FirestoreStore:
                 credentials=self.db._credentials, transport='rest'
             )
         except Exception as exc:
+            logging.getLogger(__name__).error('Firestore initialization failed: %s', type(exc).__name__)
             raise HTTPException(503, 'Firestore 설정을 확인해 주세요. 서비스 계정 JSON과 데이터베이스가 필요합니다.') from exc
 
     def list(self, collection):
