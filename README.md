@@ -20,8 +20,8 @@ FastAPI, Pydantic, firebase-admin/Firestore, OpenAI Python SDK(Gemini 공식 호
 | 화면 | URL |
 |---|---|
 | 프론트엔드 | [Vercel 홈페이지](https://ai-blog-assistant-public.vercel.app/) — 배포 완료 |
-| 백엔드 API | Render 배포 대기 |
-| Swagger UI | Render 배포 대기 (`/docs`) |
+| 백엔드 API | [Render API](https://personal-blog-assistant-api.onrender.com/) |
+| Swagger UI | [API 문서](https://personal-blog-assistant-api.onrender.com/docs) |
 
 무료 Render 인스턴스의 첫 요청은 늦을 수 있어 프론트에 연결 안내와 요청 시간 제한을 넣었습니다.
 
