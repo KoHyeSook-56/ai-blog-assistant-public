@@ -1,0 +1,12 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
+const root=path.dirname(fileURLToPath(import.meta.url));
+const out=path.join(root,'dist');
+const base=(process.env.API_BASE_URL||'').replace(/\/$/,'');
+if(process.env.VERCEL && !/^https:\/\//.test(base))throw Error('Vercel에 HTTPS API_BASE_URL 환경 변수를 설정하세요.');
+fs.mkdirSync(path.join(out,'static'),{recursive:true});
+for(const file of ['app.js','styles.css'])fs.copyFileSync(path.join(root,file),path.join(out,'static',file));
+fs.copyFileSync(path.join(root,'index.html'),path.join(out,'index.html'));
+fs.writeFileSync(path.join(out,'static','config.js'),`window.APP_CONFIG = ${JSON.stringify({API_BASE_URL:base,STATIC_PREVIEW:false})};`);
+console.log('Static frontend built. API URL configured:',Boolean(base));
