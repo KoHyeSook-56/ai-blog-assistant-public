@@ -34,6 +34,14 @@ def test_crud_duplicate_and_summary(client):
     assert client.delete('/api/data/'+key).status_code==200
     assert client.get('/api/data').json()==[]
 
+def test_bootstrap_has_consistent_rows_and_summary(client):
+    client.post('/api/data',json={'date':'2020-01-01','value':8,'memo':'검증','metric':'visits'})
+    response=client.get('/api/bootstrap')
+    assert response.status_code==200
+    body=response.json()
+    assert len(body['data'])==body['summary']['count']==1
+    assert body['summary']['series'][0]['total']==body['data'][0]['value']==8
+
 def test_conversation_roundtrip_and_no_fake_ai(client):
     messages=[{'role':'user','content':'질문'},{'role':'assistant','content':'보관할 초안'}]
     created=client.post('/api/conversations',json={'title':'요리 초안','messages':messages}).json()
