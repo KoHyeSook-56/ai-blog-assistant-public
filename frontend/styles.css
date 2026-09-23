@@ -2,3 +2,4 @@
 
 .brand-icon{flex-shrink:0}.brand strong{white-space:nowrap}@media(min-width:761px) and (max-width:1150px){.brand{gap:9px;font-size:12px}.brand strong{font-size:16px}.brand-icon{width:32px;height:40px}}@media(min-width:761px) and (max-width:1000px){.stats-strip{grid-template-columns:1fr 1fr;row-gap:18px;padding:18px 0}.stat:nth-child(2){border-right:0}}
 .notice button{margin-left:12px;padding:5px 10px;font-size:13px}
+.notice a{margin-left:12px;font-weight:700}
