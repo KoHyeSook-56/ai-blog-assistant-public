@@ -31,6 +31,12 @@ def list_data(metric:str|None=None):
 @router.get('/data/summary',tags=['데이터'])
 def get_summary(): return services.summary()
 
+@router.get('/bootstrap',tags=['상태'])
+def bootstrap():
+    """Load the initial table and summary from one Firestore read."""
+    rows = services.data_list()
+    return {'data': rows, 'summary': services.summarize(rows)}
+
 @router.post('/data',status_code=201,tags=['데이터'])
 def add_data(body:DataInput): return services.save_data(body)
 
